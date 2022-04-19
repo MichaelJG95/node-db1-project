@@ -12,16 +12,27 @@ const getById = id => {
     .first()
 }
 
-const create = account => {
+const create = async account => {
   // DO YOUR MAGIC
+  let [id] = await db('accounts').insert(account)
+  return getById(id)
 }
 
-const updateById = (id, account) => {
+const updateById = async (id, account) => {
   // DO YOUR MAGIC
+  await db('accounts')
+    .where('id', id)
+    .update(account)
+  return getById(id)
 }
 
-const deleteById = id => {
+const deleteById = async id => {
   // DO YOUR MAGIC
+  let result = await getById(id)
+  await db('accounts')
+    .where('id', id)
+    .del()
+  return result
 }
 
 module.exports = {
